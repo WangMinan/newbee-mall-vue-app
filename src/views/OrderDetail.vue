@@ -78,9 +78,9 @@
 </template>
 
 <script>
-import sHeader from '@/components/SimpleHeader'
-import { getOrderDetail, cancelOrder, confirmOrder, payOrder,refund } from '@/service/order'
-import { Dialog, Toast } from 'vant'
+import sHeader from '@/components/SimpleHeader'//引入SimpleHeader组件，命名为sHeader
+import { getOrderDetail, cancelOrder, confirmOrder, payOrder,refund } from '@/service/order'//引入order.js的方法
+import { Dialog, Toast } from 'vant' //引入vant的弹窗和自定义弹窗组件
 export default {
   components: {
     sHeader
@@ -102,7 +102,7 @@ export default {
   mounted() {
     this.init()
 
-  },
+  },//页面载入时执行init方法
   methods: {
     async init() {
       Toast.loading({
@@ -113,7 +113,7 @@ export default {
       const { data } = await getOrderDetail(id)
       this.detail = data
       Toast.clear()
-    },
+    }, //初始化方法
     cancelOrder(id) {
       Dialog.confirm({
         title: '确认取消订单？',
@@ -127,7 +127,7 @@ export default {
       }).catch(() => {
         // on cancel
       });
-    },
+    }, //取消订单方法
     handleConfirmOrder(id) {
       Dialog.confirm({
         title: '是否确认收货？',
@@ -141,7 +141,7 @@ export default {
       }).catch(() => {
         // on cancel
       });
-    },
+    }, //确认收货
     showPayFn() {
       this.showPay = true
     },
@@ -149,7 +149,7 @@ export default {
       Toast.loading({
         message: '正在跳转到支付宝...',
         forbidClick: true
-      });
+      }); //弹出选择支付方式的弹窗
       const orderNo = this.detail.orderNo
       const {data}=await payOrder(orderNo)
       // this.$router.push({ path: 'order' })
@@ -157,7 +157,7 @@ export default {
       await this.init()
       Toast.clear()
       document.write(data)
-    },
+    },//支付方法
     close() {
       Dialog.close()
     },

@@ -10,7 +10,7 @@
 
 <template>
   <div class="address-edit-box">
-    <s-header :name="`${type === 'add' ? '新增地址' : '编辑地址'}`"></s-header>
+    <s-header :name="`${type === 'add' ? '新增地址' : '编辑地址'}`"></s-header><!--type为add就是新增地址，否则为编辑地址-->
     <van-address-edit
       class="edit"
       :area-list="areaList"
@@ -28,13 +28,13 @@
 
 <script>
 import { Toast } from 'vant'
-import sHeader from '@/components/SimpleHeader'
-import { addAddress, EditAddress, DeleteAddress, getAddressDetail } from '@/service/address'
-import { tdist } from '@/common/js/utils'
+import sHeader from '@/components/SimpleHeader' //引入SimpleHeader组件，命名为sHeader
+import { addAddress, EditAddress, DeleteAddress, getAddressDetail } from '@/service/address'//引入address.js中的addAddress, EditAddress, DeleteAddress, getAddressDetail方法
+import { tdist } from '@/common/js/utils'//引入utils.js中的tdist方法
 export default {
   components: {
     sHeader
-  },
+  },//重用sHeader组件
   data() {
     return {
       areaList: {
@@ -121,14 +121,14 @@ export default {
         this.$router.push({ path: `address?from=${this.from}` })
       }, 1000)
 
-    },
+    },//保存地址方法
     async onDelete() {
       const { data } = await DeleteAddress(this.addressId)
       Toast('删除成功')
       setTimeout(() => {
         this.$router.push({ path: 'address' })
       }, 1000)
-    }
+    } //删除地址方法
   }
 }
 </script>

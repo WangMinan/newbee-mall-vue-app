@@ -57,9 +57,9 @@
 </template>
 
 <script>
-import navBar from '@/components/NavBar'
-import listScroll from '@/components/ListScroll'
-import { getCategory } from "../service/good";
+import navBar from '@/components/NavBar'//引入NavBar组件
+import listScroll from '@/components/ListScroll' //引入ListScroll组件
+import { getCategory } from "../service/good";//引入good.js的方法
 export default {
   components: {
     navBar,
@@ -75,11 +75,11 @@ export default {
     this.setWrapHeight()
     const { data } = await getCategory()
     this.categoryData = data
-  },
+  },//页面载入时执行的方法
   methods: {
     goHome () {
       this.$router.push({ path: 'home' })
-    },
+    }, //返回键回到主页 
     setWrapHeight() {
       // 设置视口高度
       let $screenHeight = document.documentElement.clientHeight
@@ -87,10 +87,10 @@ export default {
     },
     selectMenu(index) {
       this.currentIndex = index
-    },
+    },//选择类别时将类别的index赋给currentIndex
     selectProduct(item){
       this.$router.push({ path: `product-list?categoryId=${item.categoryId}` })
-    },
+    }, //选中商品时进入商品页面
   }
 }
 </script>

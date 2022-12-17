@@ -60,11 +60,11 @@
 </template>
 
 <script>
-import sHeader from '@/components/SimpleHeader'
-import { getByCartItemIds } from '../service/cart'
-import { getDefaultAddress, getAddressDetail } from '../service/address'
-import { createOrder, payOrder } from '../service/order'
-import { setLocal, getLocal } from '@/common/js/utils'
+import sHeader from '@/components/SimpleHeader'//引入SimpleHeader组件，命名为sHeader
+import { getByCartItemIds } from '../service/cart'//引入cart.js中的方法
+import { getDefaultAddress, getAddressDetail } from '../service/address'//引入address.js中的方法
+import { createOrder, payOrder } from '../service/order'//引入order.js中的方法
+import { setLocal, getLocal } from '@/common/js/utils'//引入utils.js中的方法
 import { Toast } from 'vant'
 
 export default {
@@ -82,7 +82,7 @@ export default {
   },
   mounted() {
     this.init()
-  },
+  },//载入页面时执行init方法
   methods: {
     async init() {
       Toast.loading({ message: '加载中...', forbidClick: true });
@@ -98,10 +98,10 @@ export default {
       this.cartList = list
       this.address = address
       Toast.clear()
-    },
+    },//init方法
     goTo() {
       this.$router.push({ path: `address?cartItemIds=${JSON.stringify(this.cartItemIds)}` })
-    },
+    },//跳转到选择地址界面
     deleteLocal() {
       setLocal('cartItemIds', '')
     },
@@ -114,16 +114,16 @@ export default {
       setLocal('cartItemIds', '')
       this.orderNo = data
       this.showPay = true
-    },
+    },//创建订单方法
     close() {
       this.$router.push({ path: 'order' })
-    },
+    },//完成后跳转到我的订单
     async payOrder(type) {
       Toast.loading()
       const {data}=await payOrder(this.orderNo)
       // this.$router.push({ path: 'order' })
       document.write(data);
-    }
+    }//支付，弹窗选择支付方式
   },
   computed: {
     total: function() {
@@ -133,7 +133,7 @@ export default {
       })
       return sum
     }
-  }
+  }//计算总价
 }
 </script>
 

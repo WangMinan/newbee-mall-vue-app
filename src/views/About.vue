@@ -27,21 +27,21 @@
 </template>
 
 <script>
-import sHeader from '@/components/SimpleHeader'
+import sHeader from '@/components/SimpleHeader'//引入SimpleHeader组件，命名为sHeader
 export default {
   components: {
     sHeader
   },
-}
+}//输出默认模块
 </script>
 
-<style lang="less" scoped>
+<style lang="less" scoped>//lang=“less” 可以敲层级关系的样式，scoped 使style内的样式只作用于当前的界面
   .about {
-    box-sizing: border-box;
-    padding: 20px;
+    box-sizing: border-box;//盒子模型
+    padding: 20px;//边距20px
     .about-body {
-      margin-top: 44px;
-      font-size: 16px;
+      margin-top: 44px; //上边距44px
+      font-size: 16px;//字体大小16px
       a {
         color: #007fff;
       }

@@ -49,10 +49,10 @@
 </template>
 
 <script>
-import { getDetail } from '@/service/good'
-import { addCart } from '@/service/cart'
-import sHeader from '@/components/SimpleHeader'
-import { Toast } from 'vant'
+import { getDetail } from '@/service/good'//引入good.js的方法
+import { addCart } from '@/service/cart' //引入cart.js的方法
+import sHeader from '@/components/SimpleHeader' //引入SimpleHeader组件，命名为sHeader
+import { Toast } from 'vant'//引入弹窗组件
 export default {
   data() {
     return {
@@ -63,35 +63,35 @@ export default {
   },
   components: {
     sHeader
-  },
+  },//重用sHeader组件 
   async mounted() {
     const { id } = this.$route.params
     const { data } = await getDetail(id)
     this.detail = data
-  },
+  },//页面载入时执行的方法，获取商品的信息
   methods: {
     goBack() {
       this.$router.go(-1)
-    },
+    },//返回上一个页面
     goTo() {
       this.$router.push({ path: '/cart' })
-    },
+    },//跳转到购物车页面
     async addCart() {
       const { data, resultCode } = await addCart({ goodsCount: 1, goodsId: this.detail.goodsId })
       if (resultCode === 200 ) Toast.success('添加成功')
       this.$store.dispatch('updateCart')
-    },
+    },//添加商品到购物车
     async goToCart() {
       const { data, resultCode } = await addCart({ goodsCount: 1, goodsId: this.detail.goodsId })
       this.$store.dispatch('updateCart')
       this.$router.push({ path: '/cart' })
-    }
+    }//立即购买按钮绑定的方法，跳转到购物车页面
   },
   computed: {
     count () {
       return this.$store.state.cartCount
     }
-  }
+  }//计算属性，返回购物车订单数量
 }
 </script>
 

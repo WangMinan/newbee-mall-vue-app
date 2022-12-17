@@ -70,11 +70,11 @@
 </template>
 
 <script>
-import navBar from '@/components/NavBar'
-import swiper from '@/components/Swiper'
-import { getHome } from '../service/home'
-import { getLocal } from '@/common/js/utils'
-import { Toast } from 'vant'
+import navBar from '@/components/NavBar'//引入navBar组件
+import swiper from '@/components/Swiper'//引入swiper组件
+import { getHome } from '../service/home'//引入home.js的getHome方法
+import { getLocal } from '@/common/js/utils'//引入utils.js的getLocal方法
+import { Toast } from 'vant'  //引入弹窗组件
 export default {
   name: 'home',
   data() {
@@ -127,38 +127,38 @@ export default {
             imgUrl: '//s.weituibao.com/1583585285470/qb.png',
             categoryId: 100010
           }
-      ],
+      ], //主页类别展示
     }
   },
   components: {
     navBar,
     swiper
-  },
+  },//重用navBar和swiper组件
   async mounted() {
     const token = getLocal('token')
     if (token) {
       this.isLogin = true
-    }
+    }//如果用户已登陆，则isLogin变量为true
     window.addEventListener('scroll', this.pageScroll)
     Toast.loading({
       message: '加载中...',
       forbidClick: true
-    });
+    });//跳转到主页面时弹窗“加载中”窗口
     const { data } = await getHome()
     this.swiperList = data.carousels
     this.newGoodses = data.newGoodses
     this.hots = data.hotGoodses
     this.recommends = data.recommendGoodses
     Toast.clear()
-  },
+  },//载入页面时执行的方法
   methods: {
     pageScroll() {
       let scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop
       scrollTop > 100 ? this.headerScroll = true : this.headerScroll = false
-    },
+    },//页面滚动
     goToDetail(item) {
       this.$router.push({ path: `product/${item.goodsId}` })
-    }
+    } //商品绑定的goToDetail方法，点击后跳转到商品的信息页面
   }
 }
 </script>

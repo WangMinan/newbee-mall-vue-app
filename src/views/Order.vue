@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import sHeader from '@/components/SimpleHeader'
-import { getOrderList } from '../service/order'
+import sHeader from '@/components/SimpleHeader'//引入SimpleHeader组件，命名为sHeader
+import { getOrderList } from '../service/order'//引入order.js的方法
 
 export default {
   data() {
@@ -75,17 +75,17 @@ export default {
       this.totalPage = data.totalPage
       this.loading = false;
       if (this.page >= data.totalPage) this.finished = true
-    },
+    },//加载订单列表
     onChangeTab(name, title) {
       this.status = name
       this.onRefresh()
-    },
+    },//转换到不同状态的订单
     goTo(id) {
       this.$router.push({ path: `order-detail?id=${id}` })
-    },
+    },//点击订单后跳转到订单详细信息的页面
     goBack() {
       this.$router.go(-1)
-    },
+    }, //返回上一个页面
     onLoad() {
       if (!this.refreshing && this.page < this.totalPage) {
         this.page = this.page + 1
