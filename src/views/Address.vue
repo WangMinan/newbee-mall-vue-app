@@ -9,7 +9,7 @@
 -->
 <template>
   <div class="address-box">
-    <s-header :name="'地址管理'" :back="'/user'"></s-header>
+    <s-header :name="'地址管理'" :back="'/user'"></s-header><!--页面名称为“地址管理”，上级页面为“我的”页面-->
     <div class="address-item">
       <van-address-list
         v-if="from != 'mine'"
@@ -28,13 +28,15 @@
         @add="onAdd"
         @edit="onEdit"
       />
+      <!--v-model 表示选中的地址编号，list 表示要遍历的数据集合,default-tag-text 表示默认地址标签文字，
+        @add 表示添加按钮绑定的方法,@edit 表示编辑按钮绑定的方法，@select 表示选中按钮绑定的方法--> 
     </div>
   </div>
 </template>
 
 <script>
-import sHeader from '@/components/SimpleHeader'
-import { getAddressList } from '../service/address'
+import sHeader from '@/components/SimpleHeader'//引入SimpleHeader组件，命名为sHeader
+import { getAddressList } from '../service/address' //引入address的getAddressList方法
 export default {
   components: {
     sHeader
@@ -45,7 +47,7 @@ export default {
       list: [],
       from: this.$route.query.from,
     }
-  },
+  }, //data是一个函数，函数的返回值为地址对象
   async mounted() {
     const { data } = await getAddressList()
     this.list = data.map(item => {
@@ -57,16 +59,16 @@ export default {
         isDefault: !!item.defaultFlag
       }
     })
-  },
+  }, //mounted函数表示组件加载完成后就会执行，显示用户的地址信息
   methods: {
     onAdd() {
-      this.$router.push({ path: `address-edit?type=add&from=${this.from}` })
+      this.$router.push({ path: `address-edit?type=add&from=${this.from}` })//添加地址方法，跳转到添加地址界面
     },
     onEdit(item, index) {
-      this.$router.push({ path: `address-edit?type=edit&addressId=${item.id}&from=${this.from}` })
+      this.$router.push({ path: `address-edit?type=edit&addressId=${item.id}&from=${this.from}` })//编辑地址方法，跳转到编辑地址界面
     },
     select(item, index) {
-      this.$router.push({ path: `create-order?addressId=${item.id}&from=${this.from}` })
+      this.$router.push({ path: `create-order?addressId=${item.id}&from=${this.from}` }) //结算时选择地址，跳转到生成订单的界面
     }
   }
 }

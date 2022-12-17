@@ -53,6 +53,7 @@
       button-text="结算"
       @submit="onSubmit"
     >
+    <!--购物车有商品的话显示结算按钮-->
       <van-checkbox @click="allCheck" v-model="checkAll">全选</van-checkbox>
     </van-submit-bar>
     <div class="empty" v-if="!list.length">
@@ -62,12 +63,13 @@
     </div>
     <nav-bar></nav-bar>
   </div>
+  <!--购物车没有商品时显示空空如也-->
 </template>
 
 <script>
-import { Toast } from 'vant'
-import navBar from '@/components/NavBar'
-import sHeader from '@/components/SimpleHeader'
+import { Toast } from 'vant' //引入Toast弹窗组件
+import navBar from '@/components/NavBar'//引入NavBar组件，命名为navBar
+import sHeader from '@/components/SimpleHeader'//引入SimpleHeader组件，命名为sHeader
 import { getCart, deleteCartItem, modifyCart } from '../service/cart'
 export default {
   data() {
@@ -82,10 +84,10 @@ export default {
   components: {
     navBar,
     sHeader
-  },
+  }, //重用组件sHeader和navBar
   mounted() {
     this.init()
-  },
+  }, //载入页面时执行init方法
   computed: {
     total: function() {
       let sum = 0
@@ -95,7 +97,7 @@ export default {
       })
       return sum
     }
-  },
+  },//计算属性存储总价
   methods: {
     async init() {
       Toast.loading({ message: '加载中...', forbidClick: true });
@@ -103,10 +105,10 @@ export default {
       this.list = data
       this.result = data.map(item => item.cartItemId)
       Toast.clear()
-    },
+    },//载入页面的init方法，获得购物车列表中的信息
     goBack() {
       this.$router.go(-1)
-    },
+    }, //返回-去到上一个页面
     goTo() {
       this.$router.push({ path: 'home' })
     },
@@ -124,7 +126,7 @@ export default {
         }
       })
       Toast.clear();
-    },
+    },//修改商品数量
     async onSubmit() {
       if (this.result.length === 0) {
         Toast.fail('请选择商品进行结算')
@@ -132,12 +134,12 @@ export default {
       }
       const params = JSON.stringify(this.result)
       this.$router.push({ path: `create-order?cartItemIds=${params}` })
-    },
+    },//如果未选中商品不能结算，选中商品才能生成订单
     async deleteGood(id) {
       const { data } = await deleteCartItem(id)
       this.$store.dispatch('updateCart')
       this.init()
-    },
+    },//删除订单方法 
     groupChange(result) {
       this.checkAll = result.length === this.list.length;
       this.result = result
@@ -148,7 +150,7 @@ export default {
       } else {
         this.result = []
       }
-    }
+    }//全选 
   }
 }
 </script>

@@ -68,11 +68,11 @@
 </template>
 
 <script>
-import sHeader from '@/components/SimpleHeader'
-import { login, register } from '@/service/user'
-import { setLocal } from '@/common/js/utils'
-import { Toast } from 'vant'
-import Verify from 'vue2-verify'
+import sHeader from '@/components/SimpleHeader'//引入SimpleHeader组件，命名为sHeader
+import { login, register } from '@/service/user'//引入user.js的方法
+import { setLocal } from '@/common/js/utils'//引入utils.js的方法
+import { Toast } from 'vant'//引入弹窗组件
+import Verify from 'vue2-verify'//引入验证码的组件
 export default {
   data() {
     return {
@@ -87,7 +87,7 @@ export default {
   components: {
     sHeader,
     Verify
-  },
+  },//重用sHeader和Verify组件
   methods: {
     dealTriVer() {
       // 执行验证码的验证，通过 this.verify 知道验证码是否填写正确
